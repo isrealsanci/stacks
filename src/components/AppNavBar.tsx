@@ -7,6 +7,7 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import ThemeSwitcher from "./ThemeSwitcher";
+import ConnectWalletButton from "./ConnectWalletButton";
 
 const AppNavBar = () => (
   <Navbar isBordered>
@@ -15,6 +16,9 @@ const AppNavBar = () => (
     </NavbarBrand>
     <NavbarContent justify="end">
       <NavbarItem>
+        <ConnectWalletButton />
+        </NavbarItem>
+        <NavbarItem>
         <ThemeSwitcher />
       </NavbarItem>
     </NavbarContent>
