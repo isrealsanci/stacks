@@ -1,27 +1,34 @@
-import { createContext, useContext } from "react";
+"use client";
 
-const DeviceDetectContext = createContext<{
-  deviceType: string | undefined | null;
-}>({
-  deviceType: undefined,
-});
+import { createContext, useContext, useState, useEffect } from "react";
+
+const DeviceDetectContext = createContext<boolean>(false);
 
 export const DeviceDetectProvider = ({
-  deviceType,
   children,
 }: {
-  deviceType: string | undefined | null;
   children: React.ReactNode;
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
+
   return (
-    <DeviceDetectContext.Provider value={{ deviceType }}>
+    <DeviceDetectContext.Provider value={isMobile}>
       {children}
     </DeviceDetectContext.Provider>
   );
 };
 
 export const useDeviceDetect = () => {
-  const { deviceType } = useContext(DeviceDetectContext);
-
-  return deviceType === "mobile";
+  return useContext(DeviceDetectContext);
 };

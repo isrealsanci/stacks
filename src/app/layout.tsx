@@ -1,12 +1,8 @@
-// app/layout.tsx
-
 import AppNavBar from "@/components/AppNavBar";
 import { RootProviders } from "@/providers/RootProvider";
-import NextHeaders from "@/utils/headers";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const font = DM_Sans({
@@ -19,17 +15,15 @@ export const metadata: Metadata = {
   description: "Simple single player stacks game",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const nextHeaders = new NextHeaders(await headers());
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={clsx(font.className, "overflow-hidden")}>
-        <RootProviders deviceType={nextHeaders.getDeviceType()}>
+        <RootProviders>
           <main
             className={clsx(
               "flex flex-col h-svh text-foreground bg-background font-sans",

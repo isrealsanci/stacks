@@ -6,13 +6,11 @@ import { DeviceDetectProvider } from "./DeviceDetectProvider";
 
 export function RootProviders({
   children,
-  deviceType,
 }: {
   children: React.ReactNode;
-  deviceType: string | undefined;
 }) {
   return (
-    <DeviceDetectProvider deviceType={deviceType}>
+    <DeviceDetectProvider>
       <NextUIProvider>
         <NextThemesProvider attribute="class" defaultTheme="dark">
           {children}
