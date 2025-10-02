@@ -1,5 +1,3 @@
-// app/layout.tsx
-
 import AppNavBar from "@/components/AppNavBar";
 import { RootProviders } from "@/providers/RootProvider";
 import NextHeaders from "@/utils/headers";
@@ -27,8 +25,8 @@ export default async function RootLayout({
   const nextHeaders = new NextHeaders(await headers());
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={font.className}>
+    <html lang="en" className="dark">
+      <body className={clsx(font.className, "overflow-hidden")}>
         <RootProviders deviceType={nextHeaders.getDeviceType()}>
           <main
             className={clsx(
