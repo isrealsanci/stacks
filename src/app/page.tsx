@@ -1,5 +1,8 @@
 "use client";
 
+import { useAccount } from "wagmi";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDeviceDetect } from "@/providers/DeviceDetectProvider";
 import { getTitle } from "@/utils";
 import { useKeyPressEvent } from "react-use";
@@ -8,11 +11,32 @@ import useGameModel from "../hooks/useGameModel";
 import LevelSelector from "@/components/LevelSelector";
 
 export default function Home() {
+  const { isConnected, status } = useAccount();
+  const router = useRouter();
+
+  
+  useEffect(() => {
+   
+    if (status === 'disconnected') {
+      router.push('/connect');
+    }
+  }, [status, router]);
+
   const isMobile = useDeviceDetect();
   const { gameScore, state, action, gameLevel, setGameLevel } = useGameModel();
 
   useKeyPressEvent(" ", action);
 
+ 
+  if (!isConnected) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-2xl">Loading...</p>
+      </div>
+    );
+  }
+
+ 
   return (
     <div
       onClick={isMobile ? action : undefined}

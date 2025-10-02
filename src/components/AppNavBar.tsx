@@ -5,24 +5,38 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Button // Impor Button dari NextUI
 } from "@nextui-org/react";
 import ThemeSwitcher from "./ThemeSwitcher";
-import ConnectWalletButton from "./ConnectWalletButton";
+import { useAccount, useDisconnect } from "wagmi"; // Impor hook baru
 
-const AppNavBar = () => (
-  <Navbar isBordered>
-    <NavbarBrand>
-      <p className="font-bold text-inherit">Stacks</p>
-    </NavbarBrand>
-    <NavbarContent justify="end">
-      <NavbarItem>
-        <ConnectWalletButton />
-        </NavbarItem>
+const AppNavBar = () => {
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+
+  return (
+    <Navbar isBordered>
+      <NavbarBrand>
+        <p className="font-bold text-inherit">Stacks</p>
+      </NavbarBrand>
+      
+      <NavbarContent justify="end">
+        {/* Hanya tampilkan item ini jika wallet sudah terhubung */}
+        {isConnected && (
+          <NavbarItem className="hidden md:flex items-center gap-4">
+            <p className="text-sm">{`${address?.slice(0, 6)}...${address?.slice(-4)}`}</p>
+            <Button color="danger" variant="flat" size="sm" onClick={() => disconnect()}>
+              Disconnect
+            </Button>
+          </NavbarItem>
+        )}
+        
         <NavbarItem>
-        <ThemeSwitcher />
-      </NavbarItem>
-    </NavbarContent>
-  </Navbar>
-);
+          <ThemeSwitcher />
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar>
+  );
+};
 
 export default AppNavBar;
