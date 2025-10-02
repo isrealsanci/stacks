@@ -14,9 +14,7 @@ export default function Home() {
   const { isConnected, status } = useAccount();
   const router = useRouter();
 
-  
   useEffect(() => {
-   
     if (status === 'disconnected') {
       router.push('/connect');
     }
@@ -24,19 +22,16 @@ export default function Home() {
 
   const isMobile = useDeviceDetect();
   const { gameScore, state, action, gameLevel, setGameLevel } = useGameModel();
-
   useKeyPressEvent(" ", action);
 
- 
   if (!isConnected) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="text-2xl">Loading...</p>
+        <p className="text-2xl animate-pulse">Loading...</p>
       </div>
     );
   }
 
- 
   return (
     <div
       onClick={isMobile ? action : undefined}

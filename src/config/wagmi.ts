@@ -1,4 +1,5 @@
 import { cookieStorage, createStorage } from 'wagmi';
+import { createAppKit } from '@reown/appkit/react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { base } from '@reown/appkit/networks'; 
 
@@ -9,14 +10,32 @@ if (!projectId) {
   throw new Error('Project ID is not defined in .env.local');
 }
 
-export const networks = [base];
-
-
 export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({ storage: cookieStorage }),
-  ssr: true,
   projectId,
-  networks,
+  networks: [base],
+  ssr: true,
+  connectors: [],
+});
+
+createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [base],
+  projectId,
+  metadata: {
+    name: "Stack Game",
+    description: "Based Stacks DOT Game",
+    url: "https://stacksdot.vercel.app",
+    icons: ["https://stacksdot.vercel.app/logo.png"],
+  },
+  features: {
+    email: false,
+    socials: false,
+    swaps: false,
+    onramp: false,
+    history: false,
+    send: true,
+  },
+  themeMode: "dark",
 });
 
 

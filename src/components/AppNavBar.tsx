@@ -21,7 +21,6 @@ const AppNavBar = () => {
       </NavbarBrand>
       
       <NavbarContent justify="end">
-        {/* Hanya tampilkan item ini jika wallet sudah terhubung */}
         {isConnected && (
           <NavbarItem className="hidden md:flex items-center gap-4">
             <p className="text-sm">{`${address?.slice(0, 6)}...${address?.slice(-4)}`}</p>
