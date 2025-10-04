@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import GameClient from "@/app/GameClient";
 
-const appUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+const appUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000';
 
 const frame = {
   version: "next",
