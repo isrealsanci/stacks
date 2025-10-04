@@ -7,7 +7,7 @@ import GameState from "../enums/GameState";
 import FrameRunner from "../helpers/FrameRunner";
 import useLevel from "./useLevel";
 
-const useGameModel = () => {
+const useGameModel = ({ onGameOver }: { onGameOver?: () => void }) => {
   const frameRunnerRef = useRef(new FrameRunner());
   const { gameLevel, setGameLevel, levelConfig } = useLevel();
   const { state, addRow, setRowPosition, restartGame } =
@@ -50,24 +50,25 @@ const useGameModel = () => {
   }, []);
 
   useEffect(() => {
-    if (state.gameStatus === GameState.Lost) {
-      frameRunnerRef.current.stop();
-    } else if (state.gameStatus === GameState.Won) {
-      frameRunnerRef.current.stop();
-    }
-  }, [state.gameStatus]);
-
-  const action = useCallback(() => {
     if (
       state.gameStatus === GameState.Lost ||
       state.gameStatus === GameState.Won
     ) {
-      restartGame();
-      frameRunnerRef.current.start();
-    } else if (state.gameStatus === GameState.Playing) {
+      frameRunnerRef.current.stop();
+      onGameOver?.();
+    }
+  }, [state.gameStatus, onGameOver]);
+
+  const action = useCallback(() => {
+    if (state.gameStatus === GameState.Playing) {
       addRow();
     }
-  }, [addRow, restartGame, state.gameStatus]);
+  }, [addRow, state.gameStatus]);
+
+  const resetGame = () => {
+    restartGame();
+    frameRunnerRef.current.start();
+  };
 
   return {
     gameScore,
@@ -75,7 +76,8 @@ const useGameModel = () => {
     action,
     gameLevel,
     setGameLevel,
+    resetGame,
   };
 };
 
-export default useGameModel; 
+export default useGameModel;

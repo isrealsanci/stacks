@@ -10,21 +10,29 @@ import Board from "../components/Board";
 import useGameModel from "../hooks/useGameModel";
 import LevelSelector from "@/components/LevelSelector";
 import MenuCard from "@/components/MenuCard";
+import GameOverModal from "@/components/GameOverModal";
+import { useDisclosure } from "@nextui-org/react";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const { isConnected, status } = useAccount();
   const router = useRouter();
   const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isScoreSaved, setIsScoreSaved] = useState(false);
+
+  const isMobile = useDeviceDetect();
+  const { gameScore, state, action, gameLevel, setGameLevel, resetGame } = useGameModel({
+    onGameOver: onOpen,
+  });
+  
+  useKeyPressEvent(" ", action);
 
   useEffect(() => {
     if (status === 'disconnected') {
       router.push('/connect');
     }
   }, [status, router]);
-
-  const isMobile = useDeviceDetect();
-  const { gameScore, state, action, gameLevel, setGameLevel } = useGameModel();
-  useKeyPressEvent(" ", action);
 
   if (!isConnected) {
     return (
@@ -38,9 +46,31 @@ export default function Home() {
     setIsMenuVisible(false);
   };
 
+  const handlePlayAgain = () => {
+    resetGame();
+    setIsScoreSaved(false);
+
+    onClose();
+  };
+
+  const handleSaveScore = () => {
+    toast.success('Score saved successfully!');
+    console.log("Score saved:", gameScore);
+    setIsScoreSaved(true);
+  };
+
   return (
     <>
       {isMenuVisible && <MenuCard onPlayClick={handlePlayClick} />}
+
+      <GameOverModal
+        isOpen={isOpen}
+        gameStatus={state.gameStatus}
+        score={gameScore}
+        isSaved={isScoreSaved}
+        onPlayAgain={handlePlayAgain}
+        onSaveScore={handleSaveScore}
+      />
 
       <div
         onClick={isMobile ? action : undefined}
