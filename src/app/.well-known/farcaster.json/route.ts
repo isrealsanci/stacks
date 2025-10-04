@@ -11,9 +11,11 @@ export async function GET() {
       version: "1",
       name: "STACK GAME",
       iconUrl: `${appUrl}/icon.jpg`,
+      buttonTitle: 'Play Stacks Game!',
       splashImageUrl: `${appUrl}/splash.jpg`,
       splashBackgroundColor: "#000000",
       homeUrl: appUrl,
+      webhookUrl: 'https://api.neynar.com/f/app/3aa494bc-ae3b-491d-9223-361e8ebd280c/event'
     },
   };
 
