@@ -13,6 +13,9 @@ import MenuCard from "@/components/MenuCard";
 import GameOverModal from "@/components/GameOverModal";
 import { useDisclosure } from "@nextui-org/react";
 import toast from "react-hot-toast";
+import { sdk } from "@farcaster/miniapp-sdk";
+
+
 
 export default function Home() {
   const { isConnected, status } = useAccount();
@@ -27,6 +30,12 @@ export default function Home() {
   });
   
   useKeyPressEvent(" ", action);
+
+   useEffect(() => {
+    sdk.actions.ready()
+      .then(() => sdk.actions.addMiniApp())
+      .catch((e) => console.warn("SDK ready error:", e));
+  }, []);
 
   useEffect(() => {
     if (status === 'disconnected') {
