@@ -5,10 +5,10 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Button // Impor Button dari NextUI
+  Button 
 } from "@nextui-org/react";
 import ThemeSwitcher from "./ThemeSwitcher";
-import { useAccount, useDisconnect } from "wagmi"; // Impor hook baru
+import { useAccount, useDisconnect } from "wagmi"; 
 
 const AppNavBar = () => {
   const { address, isConnected } = useAccount();
