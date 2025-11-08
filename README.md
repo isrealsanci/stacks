@@ -3,7 +3,7 @@
 [![Next.js](https://img.shields.io/badge/Built_with-Next.js-000000?logo=next.js)](https://nextjs.org/)  
 [![TailwindCSS](https://img.shields.io/badge/Styled_with-TailwindCSS-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)  
 [![React](https://img.shields.io/badge/Powered_by-React-61DAFB?logo=react)](https://react.dev/)  
-[![Reown](https://img.shields.io/badge/Web3_by-Reown-8247E5?logo=ethereum)](https://www.reown.io/)  
+[![Reown](https://img.shields.io/badge/Web3_by-Reown-8247E5?logo=ethereum)](https://www.reown.com/)  
 [![Solana](https://img.shields.io/badge/Supports-Solana-9945FF?logo=solana)](https://solana.com/)  
 
 ---
@@ -110,7 +110,7 @@ Built with ❤️ by [@isrealsanci](https://github.com/isrealsanci)
 ## 🪙 Web3 Ready
 
 Integrated with  
-- **Reown AppKit (Wagmi + Solana)**  
+- **Reown AppKit + Wagmi **  
 - **@farcaster/miniapp-sdk** for Farcaster Mini App support  
 
 > Future updates will include reward mechanics and Farcaster-based identity verification 🔥
